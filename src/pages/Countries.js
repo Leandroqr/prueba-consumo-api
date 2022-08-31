@@ -17,11 +17,7 @@ const Countries = () => {
         }
 
         getData()
-    }, [countries])
-
-    // useEffect(() => {
-        
-    // }, [countries])
+    }, [])
     
 
     function removeDiacritic(texto) {
@@ -31,7 +27,7 @@ const Countries = () => {
     const filterCountries = (e) => {
         let valueText = e.target.value.toUpperCase()
 
-        const newCountries = filteredCountries.filter( el => {
+        const newCountries = countries.filter( el => {
             const searchParam = removeDiacritic(valueText)
     
             return (
@@ -42,26 +38,26 @@ const Countries = () => {
             }
         )
 
-        setCountries(newCountries)
-
-        console.log(countries)
-        console.log(newCountries)
+        setFilteredCountries(newCountries)
     }
     
     return (
         <>
-            <div>
-                <h3>Filtrar:</h3>
-                <input  ref={inputRef} onKeyUp={filterCountries} />
-            </div>
-            <div className="cont__countries">
-                {
-                    countries?.map( (el,key) => (
-                        <div className="card__country" key={key}>
-                            {el.Country}
-                        </div>
-                    ))
-                }
+            <div className="container">
+                <div style={{textAlign: 'center'}}>
+                    <input  ref={inputRef} onKeyUp={filterCountries} placeholder="Buscar un pais" className="inputFilter" />
+                </div>
+
+                <div className="cont__countries">
+                    {filteredCountries.length === 0 && <div>No se encontraron resultados</div>}
+                    {
+                        filteredCountries?.map( (el,key) => (
+                            <div className="card__country" key={key}>
+                                {el.Country}
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         
         </>
